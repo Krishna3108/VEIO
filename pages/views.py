@@ -66,22 +66,27 @@ def formInput(request):
     try:
         vehicle_no = request.POST.get('vehicle_no').strip().upper()
         transport = request.POST.get('transport')
+        print(transport,vehicle_no)
         if vehicle_no != "":
             if request.POST.get('transport') == "entry":
                 if Flow.objects.filter(vn=vehicle_no, timeout__isnull=True).exists():
                     # Flow.objects.filter(vn=vehicle_no, timeout__isnull=True).update(
                     #     timeout=datetime.now())
+                    print("kga")
                     raise ValueError("Vehicle exit not recorded")
                 elif Regveh.objects.filter(vn=vehicle_no).exists():
                     flow = Flow(vn=vehicle_no)
                     flow.save()
+                    print("kga1")
                 elif Gesveh.objects.order_by('-firstentry').filter(vn=vehicle_no, firstentry__gte=datetime.now()-timedelta(days=1)*F('nod')).exists():
                     flow = Flow(vn=vehicle_no)
                     flow.save()
+                    print("kga2")
                 else:
                     name = request.POST.get('Entrant').strip()
                     phone_no = request.POST.get('phone_no').strip()
                     nod = int(request.POST.get('nod'))
+                    print("kga")
                     if name != "" and phone_no != "" and nod >= 1:
                         gesveh = Gesveh(vn=vehicle_no, name=name,
                                         contact=phone_no, nod=nod)

@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'veio',
         'USER': 'postgres',
-        'PASSWORD': '12345678',
+        'PASSWORD': '1547',
         'HOST': 'localhost'
     }
 }
